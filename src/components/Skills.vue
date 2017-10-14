@@ -22,12 +22,13 @@
         </div>
 
         <ul>
-            <li v-for="skill in skills" v-bind:key="skill.Id">
+            <li v-for="skill in skills" v-bind:key="skill.Id"
+                v-on:click="$router.push(`/skill/${skill.Id}`)">
                 {{ skill.Name }}
             </li>
         </ul>
 
-        <button type="button" v-on:click="$router.push('home')">Return to home page</button>
+        <button type="button" v-on:click="$router.push('/home')">Return to home page</button>
     </div>
 </template>
 
@@ -41,7 +42,7 @@
             };
         },
         created() {
-            SkillService.getSkills().then(skills => this.skills = skills);
+            SkillService.getAll().then(skills => this.skills = skills);
         }
     }
 </script>

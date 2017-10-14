@@ -24,11 +24,12 @@
                         <h2>Most skilled employees</h2>  
                     </div>
                     <div class="col-xs-3 m-bottom-10 text-right">
-                        <button type="button" v-on:click="$router.push('employees')">View all</button>
+                        <button type="button" v-on:click="$router.push('/employees')">View all</button>
                     </div>
                 </div>
                 <ul>
-                    <li v-for="employee in employees" v-bind:key="employee.Id">
+                    <li v-for="employee in employees" v-bind:key="employee.Id"
+                        v-on:click="$router.push(`/employee/${employee.Id}`)">
                         {{ employee.Name }}
                     </li>
                 </ul>
@@ -39,11 +40,12 @@
                         <h2>Rearest skills</h2>
                     </div>
                     <div class="col-xs-3 m-bottom-10 text-right">
-                        <button type="button" v-on:click="$router.push('skills')">View all</button>
+                        <button type="button" v-on:click="$router.push('/skills')">View all</button>
                     </div>
                 </div>
                 <ul>
-                    <li v-for="skill in skills" v-bind:key="skill.Id">
+                    <li v-for="skill in skills" v-bind:key="skill.Id"
+                        v-on:click="$router.push(`/skill/${skill.Id}`)">
                         {{ skill.Name }}
                     </li>
                 </ul>

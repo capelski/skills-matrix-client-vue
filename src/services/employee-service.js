@@ -1,6 +1,7 @@
 export default {
     getMostSkilled,
-    getEmployees
+    getAll,
+    getById
 };
 
 function getMostSkilled() {
@@ -9,6 +10,12 @@ function getMostSkilled() {
     });
 }
 
-function getEmployees() {
+function getAll() {
     return getMostSkilled(); // Temporarily
+}
+
+function getById(id) {
+    return new Promise((resolve, reject) => {
+        resolve({"Id":id,"Name":"Mock","Skills":[{"Id":1,"Name":"Mock","Employees":[]}]});
+    });
 }

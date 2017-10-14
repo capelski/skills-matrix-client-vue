@@ -22,12 +22,13 @@
         </div>
 
         <ul>
-            <li v-for="employee in employees" v-bind:key="employee.Id">
+            <li v-for="employee in employees" v-bind:key="employee.Id"
+                v-on:click="$router.push(`/employee/${employee.Id}`)">
                 {{ employee.Name }}
             </li>
         </ul>
 
-        <button type="button" v-on:click="$router.push('home')">Return to home page</button>
+        <button type="button" v-on:click="$router.push('/home')">Return to home page</button>
     </div>
 </template>
 
@@ -41,7 +42,7 @@
             };
         },
         created() {
-            EmployeeService.getEmployees().then(employees => this.employees = employees);
+            EmployeeService.getAll().then(employees => this.employees = employees);
         }
     }
 </script>

@@ -1,6 +1,7 @@
 export default {
     getRearest,
-    getSkills
+    getAll,
+    getById
 };
 
 function getRearest() {
@@ -9,6 +10,12 @@ function getRearest() {
     });
 }
 
-function getSkills() {
+function getAll() {
     return getRearest(); // Temporarily
+}
+
+function getById(id) {
+    return new Promise((resolve, reject) => {
+        resolve({"Id":id,"Name":"Mock","Employees":[{"Id":1,"Name":"Mock","Skills":[]}]});
+    });
 }
