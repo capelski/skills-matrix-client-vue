@@ -1,15 +1,23 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import HelloWorld from '@/components/HelloWorld'
+import Ping from '@/components/Ping'
+import Pong from '@/components/Pong'
 
 Vue.use(Router)
 
 export default new Router({
-  routes: [
+    routes: [
     {
-      path: '/',
-      name: 'Hello',
-      component: HelloWorld
+        path: '/',
+        component: Ping
+    },
+    {
+        path: '/ping',
+        component: Ping
+    },
+    {
+        path: '/pong',
+        component: Pong
     }
-  ]
+    ]
 })
