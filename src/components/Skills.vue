@@ -26,6 +26,8 @@
                 {{ skill.Name }}
             </li>
         </ul>
+
+        <button type="button" v-on:click="$router.push('home')">Return to home page</button>
     </div>
 </template>
 
