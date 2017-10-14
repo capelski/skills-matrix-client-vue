@@ -24,7 +24,7 @@
                         <h2>Most skilled employees</h2>  
                     </div>
                     <div class="col-xs-3 m-bottom-10 text-right">
-                        <a href="#" onclick="window.Navigate('employees-list-section')">View all</a>  
+                        <button type="button" v-on:click="$router.push('employees')">View all</button>
                     </div>
                 </div>
                 <ul>
@@ -39,7 +39,7 @@
                         <h2>Rearest skills</h2>
                     </div>
                     <div class="col-xs-3 m-bottom-10 text-right">
-                        <a href="#" onclick="window.Navigate('skills-list-section')">View all</a>  
+                        <button type="button" v-on:click="$router.push('skills')">View all</button>
                     </div>
                 </div>
                 <ul>

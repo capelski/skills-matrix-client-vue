@@ -1,5 +1,6 @@
 export default {
-    getRearest
+    getRearest,
+    getSkills
 };
 
 function getRearest() {
@@ -8,3 +9,6 @@ function getRearest() {
     });
 }
 
+function getSkills() {
+    return getRearest(); // Temporarily
+}

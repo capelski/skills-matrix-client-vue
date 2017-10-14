@@ -3,6 +3,8 @@ import Router from 'vue-router'
 import Ping from '@/components/Ping'
 import Pong from '@/components/Pong'
 import Home from '@/components/Home'
+import Employees from '@/components/Employees'
+import Skills from '@/components/Skills'
 
 Vue.use(Router)
 
@@ -23,6 +25,14 @@ export default new Router({
     {
         path: '/home',
         component: Home
+    },
+    {
+        path: '/employees',
+        component: Employees
+    },
+    {
+        path: '/skills',
+        component: Skills
     }
     ]
 })
