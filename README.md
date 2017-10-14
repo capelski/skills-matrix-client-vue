@@ -1,6 +1,6 @@
 # skills-matrix
 
-> Skills matrix web application client implemented with Vuex
+> Skills matrix web application client implemented with Vue and bundled via Webpack
 
 ## Build Setup
 
