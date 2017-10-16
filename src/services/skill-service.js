@@ -1,21 +1,9 @@
-export class SkillService {
+import HttpBaseService from '@/services/http-base-service';
 
-    apiUrl = process.env.baseApiUrl;
-    corsMode = process.env.corsMode;
+export default class SkillService extends HttpBaseService {
 
     getRearest() {
-        var options = {
-            method: 'GET',
-            mode: 'cors',
-            cache: 'default'
-        };
-        
-        return fetch(this.apiUrl + 'api/skill/getRearest', options)
-        .then(response => response.json())
-        .catch(error => {
-            // Notify the error through Toastr
-            return [];
-        });
+        return this.getRequest('api/skill/getRearest', []);
     }
     
     getAll() {

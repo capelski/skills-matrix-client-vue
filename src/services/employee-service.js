@@ -1,21 +1,9 @@
-export class EmployeeService {
+import HttpBaseService from '@/services/http-base-service';
 
-    apiUrl = process.env.baseApiUrl;
-    corsMode = process.env.corsMode;
+export default class EmployeeService extends HttpBaseService {
 
-    getMostSkilled() {        
-        var options = {
-            method: 'GET',
-            mode: 'cors',
-            cache: 'default'
-        };
-        
-        return fetch(this.apiUrl + 'api/employee/getMostSkilled', options)
-        .then(response => response.json())
-        .catch(error => {
-            // Notify the error through Toastr
-            return [];
-        });
+    getMostSkilled() {
+        return this.getRequest('api/employee/getMostSkilled', []);
     }
     
     getAll() {

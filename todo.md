@@ -1,2 +1,2 @@
-- HttpService base
 - GetAll with params
+- GetById

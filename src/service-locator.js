@@ -1,5 +1,5 @@
-import { EmployeeService } from '@/services/employee-service';
-import { SkillService } from '@/services/skill-service';
+import EmployeeService from '@/services/employee-service';
+import SkillService from '@/services/skill-service';
 
 const services = [{
     name: 'EmployeeService',
