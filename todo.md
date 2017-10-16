@@ -1,2 +1,2 @@
 - HttpService base
-- Service Locator pattern
+- GetAll with params

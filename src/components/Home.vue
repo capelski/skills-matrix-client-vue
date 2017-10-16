@@ -55,8 +55,7 @@
 </template>
 
 <script>
-    import { EmployeeService } from '@/services/employee-service';
-    import { SkillService } from '@/services/skill-service';
+    import { getInstance } from '@/service-locator';
 
     export default {
         data () {
@@ -66,8 +65,8 @@
             };
         },
         created() {
-            this.employeeService = new EmployeeService();
-            this.skillService = new SkillService();
+            this.employeeService = getInstance('EmployeeService');
+            this.skillService = getInstance('SkillService');
 
             this.employeeService.getMostSkilled().then(mostSkilled => this.employees = mostSkilled);
             this.skillService.getRearest().then(rearest => this.skills = rearest);
