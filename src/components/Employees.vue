@@ -33,7 +33,7 @@
 </template>
 
 <script>
-    import EmployeeService from '@/services/employee-service';
+    import { EmployeeService } from '@/services/employee-service';
 
     export default {
         data () {
@@ -42,7 +42,8 @@
             };
         },
         created() {
-            EmployeeService.getAll().then(employees => this.employees = employees);
+            this.employeeService = new EmployeeService();
+            this.employeeService.getAll().then(employees => this.employees = employees);
         }
     }
 </script>

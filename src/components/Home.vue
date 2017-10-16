@@ -55,8 +55,8 @@
 </template>
 
 <script>
-    import EmployeeService from '@/services/employee-service';
-    import SkillService from '@/services/skill-service';
+    import { EmployeeService } from '@/services/employee-service';
+    import { SkillService } from '@/services/skill-service';
 
     export default {
         data () {
@@ -66,8 +66,11 @@
             };
         },
         created() {
-            EmployeeService.getMostSkilled().then(mostSkilled => this.employees = mostSkilled);
-            SkillService.getRearest().then(rearest => this.skills = rearest);
+            this.employeeService = new EmployeeService();
+            this.skillService = new SkillService();
+
+            this.employeeService.getMostSkilled().then(mostSkilled => this.employees = mostSkilled);
+            this.skillService.getRearest().then(rearest => this.skills = rearest);
         }
     };
 </script>

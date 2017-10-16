@@ -1,21 +1,30 @@
-export default {
-    getRearest,
-    getAll,
-    getById
+export class SkillService {
+
+    apiUrl = process.env.baseApiUrl;
+    corsMode = process.env.corsMode;
+
+    getRearest() {
+        var options = {
+            method: 'GET',
+            mode: 'cors',
+            cache: 'default'
+        };
+        
+        return fetch(this.apiUrl + 'api/skill/getRearest', options)
+        .then(response => response.json())
+        .catch(error => {
+            // Notify the error through Toastr
+            return [];
+        });
+    }
+    
+    getAll() {
+        return this.getRearest(); // Temporarily
+    }
+    
+    getById(id) {
+        return new Promise((resolve, reject) => {
+            resolve({"Id":id,"Name":"Mock","Employees":[{"Id":1,"Name":"Mock","Skills":[]}]});
+        });
+    }
 };
-
-function getRearest() {
-    return new Promise((resolve, reject) => {
-        resolve([{"Id":72,"Name":"Apex","Employees":[]},{"Id":70,"Name":"AutoLISP","Employees":[]},{"Id":68,"Name":"Bash","Employees":[]},{"Id":67,"Name":"Boo","Employees":[]},{"Id":65,"Name":"Caml","Employees":[]}]);
-    });
-}
-
-function getAll() {
-    return getRearest(); // Temporarily
-}
-
-function getById(id) {
-    return new Promise((resolve, reject) => {
-        resolve({"Id":id,"Name":"Mock","Employees":[{"Id":1,"Name":"Mock","Skills":[]}]});
-    });
-}

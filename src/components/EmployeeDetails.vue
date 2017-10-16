@@ -30,7 +30,7 @@
 </template>
 
 <script>
-    import EmployeeService from '@/services/employee-service';
+    import { EmployeeService } from '@/services/employee-service';
 
     export default {
         data() {
@@ -39,7 +39,8 @@
             };
         },
         created() {
-            EmployeeService.getById(this.$route.params.id).then(employee => this.employee = employee);
+            this.employeeService = new EmployeeService();
+            this.employeeService.getById(this.$route.params.id).then(employee => this.employee = employee);
         }
     }
 </script>

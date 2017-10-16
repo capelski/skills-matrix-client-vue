@@ -33,7 +33,7 @@
 </template>
 
 <script>
-    import SkillService from '@/services/skill-service';
+    import { SkillService } from '@/services/skill-service';
 
     export default {
         data () {
@@ -42,7 +42,8 @@
             };
         },
         created() {
-            SkillService.getAll().then(skills => this.skills = skills);
+            this.skillService = new SkillService();
+            this.skillService.getAll().then(skills => this.skills = skills);
         }
     }
 </script>

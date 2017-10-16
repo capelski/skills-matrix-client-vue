@@ -1,0 +1,2 @@
+- HttpService base
+- Service Locator pattern

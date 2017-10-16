@@ -30,7 +30,7 @@
 </template>
 
 <script>
-    import SkillService from '@/services/skill-service';
+    import { SkillService } from '@/services/skill-service';
 
     export default {
         data() {
@@ -39,7 +39,8 @@
             };
         },
         created() {
-            SkillService.getById(this.$route.params.id).then(skill => this.skill = skill);
+            this.skillService = new SkillService();
+            this.skillService.getById(this.$route.params.id).then(skill => this.skill = skill);
         }
     }
 </script>

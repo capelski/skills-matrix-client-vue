@@ -1,21 +1,30 @@
-export default {
-    getMostSkilled,
-    getAll,
-    getById
+export class EmployeeService {
+
+    apiUrl = process.env.baseApiUrl;
+    corsMode = process.env.corsMode;
+
+    getMostSkilled() {        
+        var options = {
+            method: 'GET',
+            mode: 'cors',
+            cache: 'default'
+        };
+        
+        return fetch(this.apiUrl + 'api/employee/getMostSkilled', options)
+        .then(response => response.json())
+        .catch(error => {
+            // Notify the error through Toastr
+            return [];
+        });
+    }
+    
+    getAll() {
+        return this.getMostSkilled(); // Temporarily
+    }
+    
+    getById(id) {
+        return new Promise((resolve, reject) => {
+            resolve({"Id":id,"Name":"Mock","Skills":[{"Id":1,"Name":"Mock","Employees":[]}]});
+        });
+    }
 };
-
-function getMostSkilled() {
-    return new Promise((resolve, reject) => {
-        resolve([{"Id":7,"Name":"Ewan MacColl","Skills":[{"Id":59,"Name":"ECMAScript","Employees":null},{"Id":66,"Name":"C++","Employees":null},{"Id":100,"Name":"Angelscript 4","Employees":null}]},{"Id":24,"Name":"Wizz Jones","Skills":[{"Id":1,"Name":"Angelscript","Employees":null},{"Id":100,"Name":"Angelscript 4","Employees":null}]},{"Id":15,"Name":"Adam Leonardo","Skills":[{"Id":1,"Name":"Angelscript","Employees":null}]},{"Id":1,"Name":"Adele","Skills":[{"Id":71,"Name":"Applescript","Employees":null}]},{"Id":62,"Name":"Andy Brown","Skills":[{"Id":62,"Name":"COMAL","Employees":null}]}]);
-    });
-}
-
-function getAll() {
-    return getMostSkilled(); // Temporarily
-}
-
-function getById(id) {
-    return new Promise((resolve, reject) => {
-        resolve({"Id":id,"Name":"Mock","Skills":[{"Id":1,"Name":"Mock","Employees":[]}]});
-    });
-}
