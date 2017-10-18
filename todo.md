@@ -1,2 +1,3 @@
-- GetAll with params
 - GetById
+- List functionality
+- Details view

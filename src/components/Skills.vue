@@ -38,12 +38,16 @@
     export default {
         data () {
             return {
+                keywords: undefined,
+                page: 0,
+                pageSize: 10,
                 skills: []
             };
         },
         created() {
             this.skillService = getInstance('SkillService');
-            this.skillService.getAll().then(skills => this.skills = skills);
+            this.skillService.getAll(this.keywords, this.page, this.pageSize)
+                .then(paginatedList => this.skills = paginatedList.Items);
         }
     }
 </script>

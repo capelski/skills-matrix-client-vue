@@ -3,11 +3,11 @@ import HttpBaseService from '@/services/http-base-service';
 export default class EmployeeService extends HttpBaseService {
 
     getMostSkilled() {
-        return this.getRequest('api/employee/getMostSkilled', []);
+        return this.getRequest('api/employee/getMostSkilled', null, []);
     }
     
-    getAll() {
-        return this.getMostSkilled(); // Temporarily
+    getAll(keywords, page, pageSize) {
+        return this.getRequest('api/employee', { keywords, page, pageSize }, []);
     }
     
     getById(id) {

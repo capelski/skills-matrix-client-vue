@@ -38,12 +38,16 @@
     export default {
         data () {
             return {
+                keywords: undefined,
+                page: 0,
+                pageSize: 10,
                 employees: []
             };
         },
         created() {
             this.employeeService = getInstance('EmployeeService');
-            this.employeeService.getAll().then(employees => this.employees = employees);
+            this.employeeService.getAll(this.keywords, this.page, this.pageSize)
+                .then(paginatedList => this.employees = paginatedList.Items);
         }
     }
 </script>
