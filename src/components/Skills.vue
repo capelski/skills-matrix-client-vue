@@ -21,12 +21,9 @@
             </div>
         </div>
 
-        <ul>
-            <li v-for="skill in skills" v-bind:key="skill.Id"
-                v-on:click="$router.push(`/skill/${skill.Id}`)">
-                {{ skill.Name }}
-            </li>
-        </ul>
+        <paginated-list :items="skills"
+            :itemOnClick="(skill) => $router.push(`/skill/${skill.Id}`)">
+        </paginated-list>
 
         <button type="button" v-on:click="$router.push('/home')">Return to home page</button>
     </div>
@@ -34,8 +31,12 @@
 
 <script>
     import { getInstance } from '@/service-locator';
+    import PaginatedList from '@/components/PaginatedList';
 
     export default {
+        components: {
+            PaginatedList
+        },
         data () {
             return {
                 keywords: undefined,

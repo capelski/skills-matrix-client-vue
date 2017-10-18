@@ -27,12 +27,9 @@
                         <button type="button" v-on:click="$router.push('/employees')">View all</button>
                     </div>
                 </div>
-                <ul>
-                    <li v-for="employee in employees" v-bind:key="employee.Id"
-                        v-on:click="$router.push(`/employee/${employee.Id}`)">
-                        {{ employee.Name }}
-                    </li>
-                </ul>
+                <paginated-list :items="employees"
+                    :itemOnClick="(employee) => $router.push(`/employee/${employee.Id}`)">
+                </paginated-list>
             </div>
             <div class="col-sm-6">
                 <div class="row align-bottom">
@@ -43,12 +40,9 @@
                         <button type="button" v-on:click="$router.push('/skills')">View all</button>
                     </div>
                 </div>
-                <ul>
-                    <li v-for="skill in skills" v-bind:key="skill.Id"
-                        v-on:click="$router.push(`/skill/${skill.Id}`)">
-                        {{ skill.Name }}
-                    </li>
-                </ul>
+                <paginated-list :items="skills"
+                    :itemOnClick="(skill) => $router.push(`/skill/${skill.Id}`)">
+                </paginated-list>
             </div>
         </div>
     </div>
@@ -56,8 +50,12 @@
 
 <script>
     import { getInstance } from '@/service-locator';
+    import PaginatedList from '@/components/PaginatedList';
 
     export default {
+        components: {
+            PaginatedList
+        },
         data () {
             return {
                 employees: [],
