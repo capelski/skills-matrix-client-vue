@@ -1,3 +1,2 @@
-- GetById
 - List functionality
 - Details view

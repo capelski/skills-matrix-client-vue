@@ -11,8 +11,6 @@ export default class EmployeeService extends HttpBaseService {
     }
     
     getById(id) {
-        return new Promise((resolve, reject) => {
-            resolve({"Id":id,"Name":"Mock","Skills":[{"Id":1,"Name":"Mock","Employees":[]}]});
-        });
+        return this.getRequest('api/employee/getById', { id }, []);
     }
 };

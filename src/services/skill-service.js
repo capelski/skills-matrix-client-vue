@@ -11,8 +11,6 @@ export default class SkillService extends HttpBaseService {
     }
     
     getById(id) {
-        return new Promise((resolve, reject) => {
-            resolve({"Id":id,"Name":"Mock","Employees":[{"Id":1,"Name":"Mock","Skills":[]}]});
-        });
+        return this.getRequest('api/skill/getById', { id }, []);
     }
 };
