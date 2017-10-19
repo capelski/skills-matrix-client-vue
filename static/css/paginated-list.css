@@ -1,0 +1,7 @@
+.paginated-list .searcher {
+    display: none;
+}
+
+.paginated-list .searcher.visible {
+    display: block;
+}

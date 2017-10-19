@@ -21,7 +21,7 @@
             </div>
         </div>
 
-        <paginated-list :items="skills"
+        <paginated-list :itemsFetcher="skillsFetcher"
             :itemDrawer="(skill) => skill.Name"
             :itemOnClick="(skill) => $router.push(`/skill/${skill.Id}`)">
         </paginated-list>
@@ -40,16 +40,13 @@
         },
         data () {
             return {
-                keywords: undefined,
-                page: 0,
-                pageSize: 10,
-                skills: []
+                skillsFetcher: (keywords, page, pageSize) =>
+                    this.skillService.getAll(keywords, page, pageSize)
+                    .then(paginatedList => paginatedList.Items) // TODO Remove this transformation
             };
         },
         created() {
             this.skillService = getInstance('SkillService');
-            this.skillService.getAll(this.keywords, this.page, this.pageSize)
-                .then(paginatedList => this.skills = paginatedList.Items);
         }
     }
 </script>

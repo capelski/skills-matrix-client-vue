@@ -27,7 +27,7 @@
                         <button type="button" v-on:click="$router.push('/employees')">View all</button>
                     </div>
                 </div>
-                <paginated-list :items="employees"
+                <paginated-list :itemsFetcher="employeesFetcher"
                     :itemDrawer="employeeDrawer"
                     :itemOnClick="(employee) => $router.push(`/employee/${employee.Id}`)">
                 </paginated-list>
@@ -41,7 +41,7 @@
                         <button type="button" v-on:click="$router.push('/skills')">View all</button>
                     </div>
                 </div>
-                <paginated-list :items="skills"
+                <paginated-list :itemsFetcher="skillsFetcher"
                     :itemDrawer="skillDrawer"
                     :itemOnClick="(skill) => $router.push(`/skill/${skill.Id}`)">
                 </paginated-list>
@@ -60,13 +60,13 @@
         },
         data () {
             return {
-                employees: [],
-                skills: [],
-                employeeDrawer: function(employee) {
+                employeesFetcher: (keywords, page, pageSize) => this.employeeService.getMostSkilled(),
+                employeeDrawer (employee) {
                     return `${ employee.Name }
                         <span class="badge floating">${ employee.Skills.length }</span>`;
                 },
-                skillDrawer: function(skill) {
+                skillsFetcher: (keywords, page, pageSize) => this.skillService.getRearest(),
+                skillDrawer (skill) {
                     return `${ skill.Name }
                         <span class="badge floating">${ skill.Employees.length }</span>`;
                 }
@@ -75,9 +75,6 @@
         created() {
             this.employeeService = getInstance('EmployeeService');
             this.skillService = getInstance('SkillService');
-
-            this.employeeService.getMostSkilled().then(mostSkilled => this.employees = mostSkilled);
-            this.skillService.getRearest().then(rearest => this.skills = rearest);
         }
     };
 </script>

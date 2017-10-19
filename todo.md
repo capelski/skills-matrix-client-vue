@@ -1,4 +1,5 @@
 - List functionality
+    - adapt the paginated list to work with actual PaginatedList server responses
     - searcher
     - pagination
 - Details view
