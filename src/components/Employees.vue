@@ -22,6 +22,7 @@
         </div>
 
         <paginated-list :items="employees"
+            :itemDrawer="(employee) => employee.Name"
             :itemOnClick="(employee) => $router.push(`/employee/${employee.Id}`)">
         </paginated-list>
 

@@ -1,2 +1,4 @@
 - List functionality
+    - searcher
+    - pagination
 - Details view

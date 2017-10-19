@@ -28,6 +28,7 @@
                     </div>
                 </div>
                 <paginated-list :items="employees"
+                    :itemDrawer="employeeDrawer"
                     :itemOnClick="(employee) => $router.push(`/employee/${employee.Id}`)">
                 </paginated-list>
             </div>
@@ -41,6 +42,7 @@
                     </div>
                 </div>
                 <paginated-list :items="skills"
+                    :itemDrawer="skillDrawer"
                     :itemOnClick="(skill) => $router.push(`/skill/${skill.Id}`)">
                 </paginated-list>
             </div>
@@ -59,7 +61,15 @@
         data () {
             return {
                 employees: [],
-                skills: []
+                skills: [],
+                employeeDrawer: function(employee) {
+                    return `${ employee.Name }
+                        <span class="badge floating">${ employee.Skills.length }</span>`;
+                },
+                skillDrawer: function(skill) {
+                    return `${ skill.Name }
+                        <span class="badge floating">${ skill.Employees.length }</span>`;
+                }
             };
         },
         created() {

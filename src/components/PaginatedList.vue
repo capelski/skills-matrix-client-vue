@@ -2,8 +2,7 @@
     <div class="paginated-list">
         <ul>
             <li v-for="item in items" v-bind:key="itemKey(item)"
-                v-on:click="itemOnClick(item)">
-                {{ item.Name }}
+                v-on:click="itemOnClick(item)" v-html="itemDrawer(item)">
             </li>
         </ul>
     </div>
@@ -23,6 +22,10 @@
             itemOnClick: {
                 type: Function,
                 default: (item) => {}
+            },
+            itemDrawer: {
+                type: Function,
+                default: (item) => item
             }
         }
     };
