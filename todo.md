@@ -1,1 +1,2 @@
 - Details view
+- Loaders

@@ -75,6 +75,7 @@
                 keywords: undefined,
                 searcherTimeout: undefined,
                 
+                maxPages: 5,
                 pages: [1, 2, 3, 4, 5],
                 currentPage: 1,
                 pageOffset: 0,
@@ -96,7 +97,15 @@
         methods: {
             update () {
                 this.itemsFetcher(this.keywords, this.currentPage - 1 + this.pageOffset, this.pageSize)
-                    .then(paginatedData => this.data = paginatedData);
+                    .then(paginatedData => {
+                        this.data = paginatedData;
+                        var availablePages = this.data.TotalPages - this.pageOffset;
+                        var pageBarPages = Math.min(availablePages, this.maxPages);
+                        this.pages = [];
+                        for (var i = 1; i <= pageBarPages; ++i) {
+                            this.pages.push(i);
+                        }
+                    });
             },
             search() {
                 if (this.searcherTimeout) {
@@ -129,6 +138,8 @@
                 var isSizeChange = this.pageSize != size;
                 this.pageSize = size;
                 if (isSizeChange) {
+                    this.pageOffset = 0;
+                    this.currentPage = 1;
                     this.update();
                 }
             }
