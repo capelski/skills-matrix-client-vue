@@ -43,7 +43,6 @@
             return {
                 skillsFetcher: (keywords, page, pageSize) =>
                     this.skillService.getAll(keywords, page, pageSize)
-                    .then(paginatedList => paginatedList.Items) // TODO Remove this transformation
             };
         },
         created() {

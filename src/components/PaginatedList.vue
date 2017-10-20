@@ -6,7 +6,7 @@
             <span class="fa fa-times clear-icon"></span>
         </div>
         <ul>
-            <li v-for="item in items" v-bind:key="itemKey(item)"
+            <li v-for="item in data.Items" v-bind:key="itemKey(item)"
                 v-on:click="itemOnClick(item)" v-html="itemDrawer(item)">
             </li>
         </ul>
@@ -42,8 +42,13 @@
                 keywords: undefined,
                 page: 0,
                 pageSize: 10,
-                items: [],
-                searcherTimeout: undefined
+                searcherTimeout: undefined,
+                data: {
+                    CurrentPage: 0,
+                    Items: [],
+                    TotalPages: 1,
+                    TotalRecords: 10
+                }
             };
         },
         created() {
@@ -52,7 +57,7 @@
         methods: {
             update () {
                 this.itemsFetcher(this.keywords, this.page, this.pageSize)
-                    .then(items => this.items = items);
+                    .then(paginatedData => this.data = paginatedData);
             },
             search() {
                 if (this.searcherTimeout) {

@@ -60,12 +60,30 @@
         },
         data () {
             return {
-                employeesFetcher: (keywords, page, pageSize) => this.employeeService.getMostSkilled(),
+                employeesFetcher: (keywords, page, pageSize) =>
+                    this.employeeService.getMostSkilled()
+                    .then(employees => {
+                            return {
+                            CurrentPage: 0,
+                            Items: employees,
+                            TotalPages: 1,
+                            TotalRecords: 10
+                        };
+                    }),
                 employeeDrawer (employee) {
                     return `${ employee.Name }
                         <span class="badge floating">${ employee.Skills.length }</span>`;
                 },
-                skillsFetcher: (keywords, page, pageSize) => this.skillService.getRearest(),
+                skillsFetcher: (keywords, page, pageSize) =>
+                    this.skillService.getRearest()
+                    .then(skills => {
+                            return {
+                            CurrentPage: 0,
+                            Items: skills,
+                            TotalPages: 1,
+                            TotalRecords: 10
+                        };
+                    }),
                 skillDrawer (skill) {
                     return `${ skill.Name }
                         <span class="badge floating">${ skill.Employees.length }</span>`;

@@ -43,7 +43,6 @@
             return {
                 employeesFetcher: (keywords, page, pageSize) =>
                     this.employeeService.getAll(keywords, page, pageSize)
-                    .then(paginatedList => paginatedList.Items) // TODO Remove this transformation
             };
         },
         created() {
