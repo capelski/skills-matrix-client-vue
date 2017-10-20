@@ -11,6 +11,7 @@
             </li>
         </ul>
         <div :class="{ 'pagination-bar': true, 'visible': hasPagination }">
+
             <ul class="pagination clickable">
                 <li :class="[pageOffset - pages.length >= 0 ? 'enabled' : 'disabled']">
                     <span class="page-button" v-on:click="pageUpdated('previous')">&laquo;</span>
@@ -23,14 +24,17 @@
                     <span class="page-button" v-on:click="pageUpdated('next')">&raquo;</span>
                 </li>
             </ul>
+
             <div class="dropup pull-right">
                 <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1"
                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                    <span id="${listHtmlId}-page-size">10</span>
-                    <span class="caret"></span>
+                    {{pageSize}} <span class="caret"></span>
                 </button>
-                <ul id="${listHtmlId}-page-size-dropdown" class="dropdown-menu"
-                aria-labelledby="dropdownMenu1">
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                    <li v-for="size in pageSizes" v-bind:key="size" class="text-right"
+                        v-on:click="pageSizeUpdated(size)">
+                        <span class="dropdown-option">{{size}}</span>
+                    </li>
                 </ul>
             </div>
             <div class="clearfix"></div>
@@ -75,6 +79,7 @@
                 currentPage: 1,
                 pageOffset: 0,
 
+                pageSizes: [10, 15, 25],
                 pageSize: 10,
 
                 data: {
@@ -117,6 +122,13 @@
                 }
 
                 if (isPageChange) {
+                    this.update();
+                }
+            },
+            pageSizeUpdated (size) {
+                var isSizeChange = this.pageSize != size;
+                this.pageSize = size;
+                if (isSizeChange) {
                     this.update();
                 }
             }

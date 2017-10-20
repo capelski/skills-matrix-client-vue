@@ -1,3 +1,1 @@
-- List functionality
-    - pagination
 - Details view
