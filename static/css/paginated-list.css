@@ -1,7 +1,9 @@
-.paginated-list .searcher {
+.paginated-list .searcher,
+.paginated-list .pagination-bar {
     display: none;
 }
 
-.paginated-list .searcher.visible {
+.paginated-list .searcher.visible,
+.paginated-list .pagination-bar.visible {
     display: block;
 }

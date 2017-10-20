@@ -67,7 +67,7 @@
                             CurrentPage: 0,
                             Items: employees,
                             TotalPages: 1,
-                            TotalRecords: 10
+                            TotalRecords: 5
                         };
                     }),
                 employeeDrawer (employee) {
@@ -81,7 +81,7 @@
                             CurrentPage: 0,
                             Items: skills,
                             TotalPages: 1,
-                            TotalRecords: 10
+                            TotalRecords: 5
                         };
                     }),
                 skillDrawer (skill) {
