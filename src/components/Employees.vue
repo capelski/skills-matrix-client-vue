@@ -23,7 +23,8 @@
 
         <paginated-list :itemsFetcher="employeesFetcher"
             :itemDrawer="(employee) => employee.Name"
-            :itemOnClick="(employee) => $router.push(`/employee/${employee.Id}`)">
+            :itemOnClick="(employee) => $router.push(`/employee/${employee.Id}`)"
+            :hasSearcher="true">
         </paginated-list>
 
         <button type="button" v-on:click="$router.push('/home')">Return to home page</button>
