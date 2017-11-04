@@ -11,6 +11,6 @@ export default class EmployeeService extends HttpBaseService {
     }
     
     getById(id) {
-        return this.getRequest('api/employee/getById', { id }, []);
+        return this.getRequest('api/employee/getById', { id }, {});
     }
 };

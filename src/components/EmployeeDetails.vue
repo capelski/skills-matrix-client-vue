@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="page-header">
-            <h2 id="employee-page-title">{{ employee.Name }}</h2>
+            <h2>{{ employee.Name }}</h2>
         </div>
 
         <form class="form-horizontal">
@@ -12,6 +12,11 @@
             </div>
 
             <h3>Skills</h3>
+            <paginated-list :itemsFetcher="skillsFetcher"
+                :itemDrawer="(skill) => skill.Name"
+                :itemOnClick="(skill) => $router.push(`/skill/${skill.Id}`)">
+            </paginated-list>
+
             <div id="employee-details-skills"></div>
             <div id="employee-details-add-skills"></div>
 
@@ -31,16 +36,35 @@
 
 <script>
     import { getInstance } from '@/service-locator';
+    import PaginatedList from '@/components/PaginatedList';
+
+    function paginatedListData(items) {
+        return {
+            CurrentPage: 0,
+            Items: items || [],
+            TotalPages: 1,
+            TotalRecords: (items || []).length
+        };
+    }
 
     export default {
+        components: {
+            PaginatedList
+        },
         data() {
             return {
-                employee: {}
+                employee: {},
+                skillsFetcher: (keywords, page, pageSize) => Promise.resolve(paginatedListData())
             };
         },
         created() {
             this.employeeService = getInstance('EmployeeService');
-            this.employeeService.getById(this.$route.params.id).then(employee => this.employee = employee);
+            this.employeeService.getById(this.$route.params.id)
+            .then(employee => {
+                this.employee = employee;
+                this.skillsFetcher = (keywords, page, pageSize) =>
+                    Promise.resolve(paginatedListData(employee.Skills));
+            });
         }
     }
 </script>

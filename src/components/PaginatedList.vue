@@ -91,6 +91,11 @@
                 }
             };
         },
+        watch: {
+            itemsFetcher (newVal, oldVal) {
+                this.update();
+            }
+        },
         created() {
             this.update();
         },

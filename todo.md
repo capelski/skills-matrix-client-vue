@@ -1,2 +1,3 @@
 - Details view
+- Load bootstrap styles
 - Loaders
