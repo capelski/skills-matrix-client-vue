@@ -3,6 +3,19 @@ export default class HttpBaseService {
     apiUrl = process.env.baseApiUrl;
     corsMode = process.env.corsMode;
 
+    removeEntity(url) {
+        var options = {
+            method: 'DELETE',
+            mode: 'cors'
+        };
+
+        return fetch(this.apiUrl + url, options)
+        .then(response => response.json())
+        .catch(error => {
+            // Notify the error through Toastr
+        });
+    }
+
     getRequest(url, parameters, defaultValue) {        
         var options = {
             method: 'GET',
@@ -41,7 +54,6 @@ export default class HttpBaseService {
         .then(response => response.json())
         .catch(error => {
             // Notify the error through Toastr
-            return defaultValue;
         });
     }
 };

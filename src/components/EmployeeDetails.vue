@@ -29,7 +29,7 @@
             <!-- Read actions -->
             <div v-if="mode == 'read'">
                 <button type="button" class="btn btn-primary" v-on:click="mode = 'edit'">Edit</button>
-                <button type="button" class="btn btn-danger">Delete</button>
+                <button type="button" class="btn btn-danger" v-on:click="remove">Delete</button>
             </div>
 
             <!-- Edit actions -->
@@ -94,6 +94,11 @@
             }
         },
         methods: {
+            remove() {
+                this.employeeService.remove(this.employee.Id).then(employee => {
+                    this.$router.push('/employees');
+                });
+            },
             save() {
                 this.employeeService.save(this.employee).then(employee => {
                     this.employee = employee;
