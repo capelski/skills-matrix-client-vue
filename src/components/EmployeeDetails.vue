@@ -8,29 +8,42 @@
 
             <div class="form-group no-margin">
                 <label for="Name">Name</label>
-                <input id="employee-model-name" value="" class="form-control"/>
+                <input class="form-control" v-model="employee.Name" :disabled="mode == 'read'" />
             </div>
 
             <h3>Skills</h3>
-            <paginated-list :itemsFetcher="skillsFetcher"
+            <paginated-list
+                :itemsFetcher="employeeSkills"
                 :itemDrawer="(skill) => skill.Name"
                 :itemOnClick="(skill) => $router.push(`/skill/${skill.Id}`)">
             </paginated-list>
 
-            <div id="employee-details-skills"></div>
-            <div id="employee-details-add-skills"></div>
+            <paginated-list
+                v-if="mode == 'edit'"
+                :itemsFetcher="skillsFetcher"
+                :itemDrawer="(skill) => skill.Name"
+                :itemOnClick="(skill) => $router.push(`/skill/${skill.Id}`)"
+                :hasSearcher="true">
+            </paginated-list>
 
             <!-- Read actions -->
-            <a id="employee-edit-button" class="btn btn-primary" href="#">Edit</a>
-            <button id="employee-delete-button" type="button" class="btn btn-danger">Delete</button>
+            <div v-if="mode == 'read'">
+                <button type="button" class="btn btn-primary" v-on:click="mode = 'edit'">Edit</button>
+                <button type="button" class="btn btn-danger">Delete</button>
+            </div>
 
             <!-- Edit actions -->
-            <button id="employee-save-button" type="button" class="btn btn-primary">Save</button>
-            <a id="employee-cancel-button" class="btn btn-default" href="#">Cancel</a>
+            <div v-if="mode == 'edit'">
+                <button type="button" class="btn btn-primary"
+                    v-on:click="save">Save</button>
+                <button type="button" class="btn btn-default" v-on:click="discardChanges">Cancel</button>
+            </div>
         </form>
         
         <hr />
-        <button type="button" v-on:click="$router.push('/employees')">Employees list</button>
+        <div v-if="employee.Id != 0">
+            <button type="button" v-on:click="$router.push('/employees')">Employees list</button>
+        </div>
     </div>
 </template>
 
@@ -53,18 +66,48 @@
         },
         data() {
             return {
-                employee: {},
-                skillsFetcher: (keywords, page, pageSize) => Promise.resolve(paginatedListData())
+                mode: 'read',
+                employee: {
+                    Id: 0,
+                    Name: 'Employee name',
+                    Skills: []
+                },
+                employeeSkills: (keywords, page, pageSize) => Promise.resolve(paginatedListData()),
+                skillsFetcher: (keywords, page, pageSize) =>
+                    keywords ? this.skillService.getAll(keywords, page, pageSize) : Promise.resolve([])
             };
         },
         created() {
             this.employeeService = getInstance('EmployeeService');
-            this.employeeService.getById(this.$route.params.id)
-            .then(employee => {
-                this.employee = employee;
-                this.skillsFetcher = (keywords, page, pageSize) =>
-                    Promise.resolve(paginatedListData(employee.Skills));
-            });
+            this.skillService = getInstance('SkillService');
+
+            this.mode = this.$route.query.mode || this.mode;
+
+            var employeeId = this.$route.params.id;
+            if (employeeId != 0) {
+                this.employeeService.getById(employeeId)
+                .then(employee => {
+                    this.employee = employee;
+                    this.employeeSkills = (keywords, page, pageSize) =>
+                        Promise.resolve(paginatedListData(employee.Skills));
+                });
+            }
+        },
+        methods: {
+            save() {
+                this.employeeService.save(this.employee).then(employee => {
+                    this.employee = employee;
+                    this.mode = 'read';
+                });
+            },
+            discardChanges() {
+                if (this.employee.Id != 0) {
+                    this.mode = 'read';
+                }
+                else {
+                    this.$router.push('/employees');
+                }
+            }
         }
     }
 </script>

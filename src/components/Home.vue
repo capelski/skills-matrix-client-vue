@@ -27,7 +27,8 @@
                         <button type="button" v-on:click="$router.push('/employees')">View all</button>
                     </div>
                 </div>
-                <paginated-list :itemsFetcher="employeesFetcher"
+                <paginated-list
+                    :itemsFetcher="employeesFetcher"
                     :itemDrawer="employeeDrawer"
                     :itemOnClick="(employee) => $router.push(`/employee/${employee.Id}`)">
                 </paginated-list>
@@ -41,7 +42,8 @@
                         <button type="button" v-on:click="$router.push('/skills')">View all</button>
                     </div>
                 </div>
-                <paginated-list :itemsFetcher="skillsFetcher"
+                <paginated-list
+                    :itemsFetcher="skillsFetcher"
                     :itemDrawer="skillDrawer"
                     :itemOnClick="(skill) => $router.push(`/skill/${skill.Id}`)">
                 </paginated-list>

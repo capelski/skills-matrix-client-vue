@@ -21,7 +21,8 @@
             </div>
         </div>
 
-        <paginated-list :itemsFetcher="skillsFetcher"
+        <paginated-list
+            :itemsFetcher="skillsFetcher"
             :itemDrawer="(skill) => skill.Name"
             :itemOnClick="(skill) => $router.push(`/skill/${skill.Id}`)"
             :hasSearcher="true"

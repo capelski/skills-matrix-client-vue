@@ -13,4 +13,8 @@ export default class SkillService extends HttpBaseService {
     getById(id) {
         return this.getRequest('api/skill/getById', { id }, {});
     }
+    
+    save(skill) {
+        return this.saveEntity('api/skill', skill);
+    }
 };

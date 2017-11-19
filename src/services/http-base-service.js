@@ -28,5 +28,21 @@ export default class HttpBaseService {
             return defaultValue;
         });
     }
+
+    saveEntity(url, entitity) {
+        var options = {
+            method: entitity.Id == 0 ? 'POST' : 'PUT',
+            headers: new Headers({'content-type': 'application/json'}),
+            body: JSON.stringify(entitity),
+            mode: 'cors'
+        };
+
+        return fetch(this.apiUrl + url, options)
+        .then(response => response.json())
+        .catch(error => {
+            // Notify the error through Toastr
+            return defaultValue;
+        });
+    }
 };
     

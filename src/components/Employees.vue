@@ -6,9 +6,10 @@
                     <h2>Employees</h2>
                 </div>
                 <div class="col-xs-6 text-right m-bottom-10">
-                    <a class="btn btn-primary" href="#">
+                    <button
+                        v-on:click="(employee) => $router.push({path: `/employee/0`, query: { mode: 'edit'}})">
                         Create
-                    </a>
+                    </button>
                 </div>
             </div>
         </div>
@@ -21,7 +22,8 @@
             </div>
         </div>
 
-        <paginated-list :itemsFetcher="employeesFetcher"
+        <paginated-list
+            :itemsFetcher="employeesFetcher"
             :itemDrawer="(employee) => employee.Name"
             :itemOnClick="(employee) => $router.push(`/employee/${employee.Id}`)"
             :hasSearcher="true"

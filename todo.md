@@ -1,3 +1,6 @@
 - Details view
+    - Save
+    - Delete
+    - Add Skills
 - Load bootstrap styles
 - Loaders

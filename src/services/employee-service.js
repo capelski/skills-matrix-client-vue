@@ -13,4 +13,8 @@ export default class EmployeeService extends HttpBaseService {
     getById(id) {
         return this.getRequest('api/employee/getById', { id }, {});
     }
+
+    save(employee) {
+        return this.saveEntity('api/employee', employee);
+    }
 };
