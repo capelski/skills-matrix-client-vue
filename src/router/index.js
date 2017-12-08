@@ -31,7 +31,15 @@ export default new Router({
         component: EmployeeDetails
     },
     {
+        path: '/employee/edit/:id',
+        component: EmployeeDetails
+    },
+    {
         path: '/skill/:id',
+        component: SkillDetails
+    },
+    {
+        path: '/skill/edit/:id',
         component: SkillDetails
     }
     ]

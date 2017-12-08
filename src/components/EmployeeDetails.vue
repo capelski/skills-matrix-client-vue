@@ -15,7 +15,7 @@
             <paginated-list
                 :itemsFetcher="employeeSkills"
                 :itemDrawer="(skill) => skill.Name"
-                :itemOnClick="(skill) => $router.push(`/skill/${skill.Id}`)">
+                :itemOnClick="onOwnedSkillClick">
             </paginated-list>
 
             <paginated-list
@@ -28,7 +28,7 @@
 
             <!-- Read actions -->
             <div v-if="mode == 'read'">
-                <button type="button" class="btn btn-primary" v-on:click="mode = 'edit'">Edit</button>
+                <button type="button" class="btn btn-primary" v-on:click="edit">Edit</button>
                 <button type="button" class="btn btn-danger" v-on:click="remove">Delete</button>
             </div>
 
@@ -81,7 +81,9 @@
             this.employeeService = getInstance('EmployeeService');
             this.skillService = getInstance('SkillService');
 
-            this.mode = this.$route.query.mode || this.mode;
+            if (this.$route.path.indexOf('/edit/') > -1) {
+                this.mode = 'edit';
+            }
 
             var employeeId = this.$route.params.id;
             if (employeeId != 0) {
@@ -94,6 +96,27 @@
             }
         },
         methods: {
+            discardChanges() {
+                if (this.employee.Id != 0) {
+                    this.$router.push(`/employee/${this.employee.Id}`);
+                }
+                else {
+                    this.$router.push('/employees');
+                }
+            },
+            edit() {
+                this.$router.push(`/employee/edit/${this.employee.Id}`);
+            },
+            onOwnedSkillClick(skill) {
+                if (this.mode == 'edit') {
+                    this.employee.Skills = this.employee.Skills.filter(s => s.Id != skill.Id);
+                    this.employeeSkills = (keywords, page, pageSize) =>
+                        Promise.resolve(paginatedListData(this.employee.Skills));
+                }
+                else {
+                    this.$router.push(`/skill/${skill.Id}`);
+                }
+            },
             remove() {
                 this.employeeService.remove(this.employee.Id).then(employee => {
                     this.$router.push('/employees');
@@ -101,17 +124,8 @@
             },
             save() {
                 this.employeeService.save(this.employee).then(employee => {
-                    this.employee = employee;
-                    this.mode = 'read';
+                    this.$router.push(`/employee/${this.employee.Id}`);
                 });
-            },
-            discardChanges() {
-                if (this.employee.Id != 0) {
-                    this.mode = 'read';
-                }
-                else {
-                    this.$router.push('/employees');
-                }
             }
         }
     }
