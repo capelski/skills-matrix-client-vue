@@ -1,5 +1,6 @@
-- Details view
-    - Delete
+- Employee Details view
     - Add Skills
+- Delete popup confirmation 
+- Replicate Employee details view for Skills
 - Load bootstrap styles
 - Loaders
