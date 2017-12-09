@@ -1,12 +1,22 @@
 <template>
-    <div id="app">
+    <div id="app" class="container">
+        <navbar/>
         <router-view :key="$route.fullPath">
         </router-view>
+        <hr />
+        <footer>
+            <p>&#169; 2017 - Skills Matrix</p>
+        </footer>
     </div>
 </template>
 
 <script>
+    import Navbar from '@/components/Navbar';
+
     export default {
-        name: 'app'
+        name: 'app',
+        components: {
+            Navbar
+        }
     };
 </script>

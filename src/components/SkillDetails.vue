@@ -4,45 +4,37 @@
             <h2>{{ skill.Name }}</h2>
         </div>
 
-        <form class="form-horizontal">
+        <div class="form-group">
+            <label for="Name">Name</label>
+            <input class="form-control" v-model="skill.Name" :disabled="mode == 'read'" />
+        </div>
 
-            <div class="form-group no-margin">
-                <label for="Name">Name</label>
-                <input class="form-control" v-model="skill.Name" :disabled="mode == 'read'" />
-            </div>
+        <h3>Employees</h3>
+        <paginated-list
+            :itemsFetcher="skillEmployees"
+            :itemDrawer="(employee) => employee.Name"
+            :itemOnClick="removeEmployee">
+        </paginated-list>
 
-            <h3>Employees</h3>
-            <paginated-list
-                :itemsFetcher="skillEmployees"
-                :itemDrawer="(employee) => employee.Name"
-                :itemOnClick="removeEmployee">
-            </paginated-list>
+        <paginated-list
+            v-if="mode == 'edit'"
+            :itemsFetcher="employeesFetcher"
+            :itemDrawer="(employee) => employee.Name"
+            :itemOnClick="addEmployee"
+            :hasSearcher="true">
+        </paginated-list>
 
-            <paginated-list
-                v-if="mode == 'edit'"
-                :itemsFetcher="employeesFetcher"
-                :itemDrawer="(employee) => employee.Name"
-                :itemOnClick="addEmployee"
-                :hasSearcher="true">
-            </paginated-list>
+        <!-- Read actions -->
+        <div v-if="mode == 'read'">
+            <button type="button" class="btn btn-primary" v-on:click="edit">Edit</button>
+            <button type="button" class="btn btn-danger" v-on:click="remove">Delete</button>
+        </div>
 
-            <!-- Read actions -->
-            <div v-if="mode == 'read'">
-                <button type="button" class="btn btn-primary" v-on:click="edit">Edit</button>
-                <button type="button" class="btn btn-danger" v-on:click="remove">Delete</button>
-            </div>
-
-            <!-- Edit actions -->
-            <div v-if="mode == 'edit'">
-                <button type="button" class="btn btn-primary"
-                    v-on:click="save">Save</button>
-                <button type="button" class="btn btn-default" v-on:click="discardChanges">Cancel</button>
-            </div>
-        </form>
-        
-        <hr />
-        <div v-if="skill.Id != 0">
-            <button type="button" v-on:click="$router.push('/skills')">Skills list</button>
+        <!-- Edit actions -->
+        <div v-if="mode == 'edit'">
+            <button type="button" class="btn btn-primary"
+                v-on:click="save">Save</button>
+            <button type="button" class="btn btn-default" v-on:click="discardChanges">Cancel</button>
         </div>
     </div>
 </template>

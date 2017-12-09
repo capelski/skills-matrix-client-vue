@@ -1,5 +1,5 @@
 <template>
-    <div class="navigation-section">
+    <div>
         <div class="row">
             <div class="col-xs-12">
                 <div class="page-header">
@@ -24,7 +24,9 @@
                         <h2>Most skilled employees</h2>  
                     </div>
                     <div class="col-xs-3 m-bottom-10 text-right">
-                        <button type="button" v-on:click="$router.push('/employees')">View all</button>
+                        <button type="button" v-on:click="$router.push('/employees')" class="btn btn-default">
+                            View all
+                        </button>
                     </div>
                 </div>
                 <paginated-list
@@ -39,7 +41,9 @@
                         <h2>Rearest skills</h2>
                     </div>
                     <div class="col-xs-3 m-bottom-10 text-right">
-                        <button type="button" v-on:click="$router.push('/skills')">View all</button>
+                        <button type="button" v-on:click="$router.push('/skills')" class="btn btn-default">
+                            View all
+                        </button>
                     </div>
                 </div>
                 <paginated-list

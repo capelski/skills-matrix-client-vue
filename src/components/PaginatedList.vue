@@ -3,11 +3,14 @@
         <div :class="{ 'input-group searcher': true, 'visible': hasSearcher }">
             <span class="input-group-addon"><i class="fa fa-search"></i></span>
             <input class="form-control" v-model="keywords" v-on:keyup="search" />
-            <span class="fa fa-times clear-icon"></span>
+            <span class="fa fa-times clear-icon" v-if="keywords" v-on:click="clearKeywords()"></span>
         </div>
-        <ul>
-            <li v-for="item in data.Items" v-bind:key="itemKey(item)"
-                v-on:click="_itemOnClick(item)" v-html="itemDrawer(item)">
+        <ul class="list-group clickable">
+            <li v-for="item in data.Items"
+                v-bind:key="itemKey(item)"
+                v-on:click="_itemOnClick(item)"
+                v-html="itemDrawer(item)"
+                class="list-group-item">
             </li>
         </ul>
         <div :class="{ 'pagination-bar': true, 'visible': hasPagination }">
@@ -148,11 +151,16 @@
                     this.update();
                 }
             },
+            clearKeywords() {
+                this.keywords = undefined;
+                this.update();
+            },
             _itemOnClick(item) {
                 var additionalActions = this.itemOnClick(item);
                 if (additionalActions) {
-                    this.keywords = additionalActions.clearKeywords ? undefined : this.keywords;
-                    this.update();
+                    if (additionalActions.clearKeywords) {
+                        this.clearKeywords();
+                    }
                 }
             }
         }

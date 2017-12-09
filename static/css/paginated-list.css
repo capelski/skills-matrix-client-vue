@@ -1,9 +1,52 @@
-.paginated-list .searcher,
+.paginated-list {
+    margin-bottom: 20px;
+}
+
+.searcher,
 .paginated-list .pagination-bar {
     display: none;
 }
 
-.paginated-list .searcher.visible,
+.paginated-list .searcher.visible {
+    display: table;
+}
+
 .paginated-list .pagination-bar.visible {
+    display: block;
+}
+
+.paginated-list .searcher .clear-icon {
+    position: absolute;
+    right: 10px;
+    top: 0;
+    bottom: 0;
+    height: 14px;
+    margin: auto;
+    font-size: 14px;
+    cursor: pointer;
+    z-index: 10;
+}
+
+.paginated-list ul.clickable > li {
+    cursor: pointer;
+}
+
+.paginated-list .list-group,
+.paginated-list .form-group,
+.paginated-list .input-group {
+    margin-bottom: 5px;
+}
+
+.paginated-list .pagination-bar .pagination {
+    margin: 0;
+}
+
+.paginated-list .pagination-bar ul.dropdown-menu {
+    min-width: auto;
+}
+
+.paginated-list .pagination-bar ul.dropdown-menu > li > span {
+    padding: 3px 20px;
+    cursor: pointer;
     display: block;
 }

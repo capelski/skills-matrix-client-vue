@@ -6,8 +6,9 @@
                     <h2>Employees</h2>
                 </div>
                 <div class="col-xs-6 text-right m-bottom-10">
-                    <button
-                        v-on:click="() => $router.push('/employee/edit/0')">
+                    <button 
+                        v-on:click="() => $router.push('/employee/edit/0')"
+                        class="btn btn-primary">
                         Create
                     </button>
                 </div>
@@ -29,8 +30,6 @@
             :hasSearcher="true"
             :hasPagination="true">
         </paginated-list>
-
-        <button type="button" v-on:click="$router.push('/home')">Return to home page</button>
     </div>
 </template>
 

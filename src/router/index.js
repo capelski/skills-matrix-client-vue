@@ -1,12 +1,12 @@
-import Vue from 'vue'
-import Router from 'vue-router'
-import Home from '@/components/Home'
-import Employees from '@/components/Employees'
-import Skills from '@/components/Skills'
-import EmployeeDetails from '@/components/EmployeeDetails'
-import SkillDetails from '@/components/SkillDetails'
+import Vue from 'vue';
+import Router from 'vue-router';
+import Home from '@/components/Home';
+import Employees from '@/components/Employees';
+import Skills from '@/components/Skills';
+import EmployeeDetails from '@/components/EmployeeDetails';
+import SkillDetails from '@/components/SkillDetails';
 
-Vue.use(Router)
+Vue.use(Router);
 
 export default new Router({
     routes: [
@@ -43,4 +43,4 @@ export default new Router({
             component: SkillDetails
         }
     ]
-})
+});

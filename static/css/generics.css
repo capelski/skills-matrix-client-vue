@@ -1,0 +1,24 @@
+.m-bottom-10 {
+    margin-bottom: 10px;
+}
+
+.responsive-img {
+    max-width: 100%;
+    margin: auto;
+    display: block;
+}
+
+.row.align-bottom {
+    font-size: 0;
+}
+
+.row.align-bottom > * {
+    float: none;
+    display: inline-block;
+    vertical-align: bottom;
+    font-size: 14px;
+}
+
+.clickable {
+    cursor: pointer;
+}

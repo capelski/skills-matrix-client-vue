@@ -1,4 +1,3 @@
+- Add/Remove skills icon
 - Delete popup confirmation 
-- Replicate Employee details view for Skills
-- Load bootstrap styles
 - Loaders
