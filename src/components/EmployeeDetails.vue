@@ -15,14 +15,14 @@
             <paginated-list
                 :itemsFetcher="employeeSkills"
                 :itemDrawer="(skill) => skill.Name"
-                :itemOnClick="onOwnedSkillClick">
+                :itemOnClick="removeSkill">
             </paginated-list>
 
             <paginated-list
                 v-if="mode == 'edit'"
                 :itemsFetcher="skillsFetcher"
                 :itemDrawer="(skill) => skill.Name"
-                :itemOnClick="(skill) => $router.push(`/skill/${skill.Id}`)"
+                :itemOnClick="addSkill"
                 :hasSearcher="true">
             </paginated-list>
 
@@ -48,8 +48,10 @@
 </template>
 
 <script>
+    import Utils from '@/utils';
     import { getInstance } from '@/service-locator';
     import PaginatedList from '@/components/PaginatedList';
+
 
     function paginatedListData(items) {
         return {
@@ -74,7 +76,14 @@
                 },
                 employeeSkills: (keywords, page, pageSize) => Promise.resolve(paginatedListData()),
                 skillsFetcher: (keywords, page, pageSize) =>
-                    keywords ? this.skillService.getAll(keywords, page, pageSize) : Promise.resolve([])
+                    keywords ?
+                        this.skillService.getAll(keywords, page, pageSize)
+                        .then(paginatedContent => {
+                            paginatedContent.Items =
+                                Utils.leftOuterJoin(paginatedContent.Items, this.employee.Skills, 'Id');
+                            return paginatedContent;
+                        }) :
+                        Promise.resolve([])
             };
         },
         created() {
@@ -96,6 +105,12 @@
             }
         },
         methods: {
+            addSkill(skill) {
+                this.employee.Skills.push(skill);
+                return {
+                    clearKeywords: true
+                };
+            },
             discardChanges() {
                 if (this.employee.Id != 0) {
                     this.$router.push(`/employee/${this.employee.Id}`);
@@ -107,7 +122,7 @@
             edit() {
                 this.$router.push(`/employee/edit/${this.employee.Id}`);
             },
-            onOwnedSkillClick(skill) {
+            removeSkill(skill) {
                 if (this.mode == 'edit') {
                     this.employee.Skills = this.employee.Skills.filter(s => s.Id != skill.Id);
                     this.employeeSkills = (keywords, page, pageSize) =>

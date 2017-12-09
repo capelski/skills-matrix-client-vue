@@ -1,5 +1,3 @@
-- Employee Details view
-    - Add Skills in Edit mode
 - Delete popup confirmation 
 - Replicate Employee details view for Skills
 - Load bootstrap styles

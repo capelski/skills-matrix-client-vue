@@ -7,7 +7,7 @@
         </div>
         <ul>
             <li v-for="item in data.Items" v-bind:key="itemKey(item)"
-                v-on:click="itemOnClick(item)" v-html="itemDrawer(item)">
+                v-on:click="_itemOnClick(item)" v-html="itemDrawer(item)">
             </li>
         </ul>
         <div :class="{ 'pagination-bar': true, 'visible': hasPagination }">
@@ -145,6 +145,13 @@
                 if (isSizeChange) {
                     this.pageOffset = 0;
                     this.currentPage = 1;
+                    this.update();
+                }
+            },
+            _itemOnClick(item) {
+                var additionalActions = this.itemOnClick(item);
+                if (additionalActions) {
+                    this.keywords = additionalActions.clearKeywords ? undefined : this.keywords;
                     this.update();
                 }
             }
