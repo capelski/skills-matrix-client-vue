@@ -15,7 +15,7 @@ export default class SkillService extends HttpBaseService {
     }
     
     remove(skillId) {
-        return this.removeEntity(`api/employee?id=${skillId}`);
+        return this.removeEntity(`api/skill?id=${skillId}`);
     }
     
     save(skill) {
