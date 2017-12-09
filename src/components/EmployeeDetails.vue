@@ -74,7 +74,8 @@
                     Name: 'Employee name',
                     Skills: []
                 },
-                employeeSkills: (keywords, page, pageSize) => Promise.resolve(paginatedListData()),
+                employeeSkills: (keywords, page, pageSize) => 
+                    Promise.resolve(paginatedListData(this.employee.Skills)),
                 skillsFetcher: (keywords, page, pageSize) =>
                     keywords ?
                         this.skillService.getAll(keywords, page, pageSize)
@@ -100,7 +101,7 @@
                 .then(employee => {
                     this.employee = employee;
                     this.employeeSkills = (keywords, page, pageSize) =>
-                        Promise.resolve(paginatedListData(employee.Skills));
+                        Promise.resolve(paginatedListData(this.employee.Skills));
                 });
             }
         },
@@ -139,7 +140,7 @@
             },
             save() {
                 this.employeeService.save(this.employee).then(employee => {
-                    this.$router.push(`/employee/${this.employee.Id}`);
+                    this.$router.push(`/employee/${employee.Id}`);
                 });
             }
         }

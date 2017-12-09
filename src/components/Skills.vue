@@ -6,9 +6,10 @@
                     <h2>Skills</h2>
                 </div>
                 <div class="col-xs-6 text-right m-bottom-10">
-                    <a class="btn btn-primary" href="#">
+                    <button
+                        v-on:click="() => $router.push('/skill/edit/0')">
                         Create
-                    </a>
+                    </button>
                 </div>
             </div>
         </div>

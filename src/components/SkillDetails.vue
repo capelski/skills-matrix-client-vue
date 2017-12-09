@@ -1,46 +1,148 @@
 <template>
     <div>
         <div class="page-header">
-            <h2 id="skill-page-title">{{ skill.Name }}</h2>
+            <h2>{{ skill.Name }}</h2>
         </div>
 
         <form class="form-horizontal">
 
             <div class="form-group no-margin">
                 <label for="Name">Name</label>
-                <input id="skill-model-name" value="" class="form-control"/>
+                <input class="form-control" v-model="skill.Name" :disabled="mode == 'read'" />
             </div>
 
-            <h3>Skills</h3>
-            <div id="skill-details-skills"></div>
-            <div id="skill-details-add-skills"></div>
+            <h3>Employees</h3>
+            <paginated-list
+                :itemsFetcher="skillEmployees"
+                :itemDrawer="(employee) => employee.Name"
+                :itemOnClick="removeEmployee">
+            </paginated-list>
+
+            <paginated-list
+                v-if="mode == 'edit'"
+                :itemsFetcher="employeesFetcher"
+                :itemDrawer="(employee) => employee.Name"
+                :itemOnClick="addEmployee"
+                :hasSearcher="true">
+            </paginated-list>
 
             <!-- Read actions -->
-            <a id="skill-edit-button" class="btn btn-primary" href="#">Edit</a>
-            <button id="skill-delete-button" type="button" class="btn btn-danger">Delete</button>
+            <div v-if="mode == 'read'">
+                <button type="button" class="btn btn-primary" v-on:click="edit">Edit</button>
+                <button type="button" class="btn btn-danger" v-on:click="remove">Delete</button>
+            </div>
 
             <!-- Edit actions -->
-            <button id="skill-save-button" type="button" class="btn btn-primary">Save</button>
-            <a id="skill-cancel-button" class="btn btn-default" href="#">Cancel</a>
+            <div v-if="mode == 'edit'">
+                <button type="button" class="btn btn-primary"
+                    v-on:click="save">Save</button>
+                <button type="button" class="btn btn-default" v-on:click="discardChanges">Cancel</button>
+            </div>
         </form>
         
         <hr />
-        <button type="button" v-on:click="$router.push('/skills')">Skills list</button>
+        <div v-if="skill.Id != 0">
+            <button type="button" v-on:click="$router.push('/skills')">Skills list</button>
+        </div>
     </div>
 </template>
 
 <script>
+    import Utils from '@/utils';
     import { getInstance } from '@/service-locator';
+    import PaginatedList from '@/components/PaginatedList';
+
+
+    function paginatedListData(items) {
+        return {
+            CurrentPage: 0,
+            Items: items || [],
+            TotalPages: 1,
+            TotalRecords: (items || []).length
+        };
+    }
 
     export default {
+        components: {
+            PaginatedList
+        },
         data() {
             return {
-                skill: {}
+                mode: 'read',
+                skill: {
+                    Id: 0,
+                    Name: 'Skill name',
+                    Employees: []
+                },
+                skillEmployees: (keywords, page, pageSize) =>
+                    Promise.resolve(paginatedListData(this.skill.Employees)),
+                employeesFetcher: (keywords, page, pageSize) =>
+                    keywords ?
+                        this.employeeService.getAll(keywords, page, pageSize)
+                        .then(paginatedContent => {
+                            paginatedContent.Items =
+                                Utils.leftOuterJoin(paginatedContent.Items, this.skill.Employees, 'Id');
+                            return paginatedContent;
+                        }) :
+                        Promise.resolve([])
             };
         },
         created() {
             this.skillService = getInstance('SkillService');
-            this.skillService.getById(this.$route.params.id).then(skill => this.skill = skill);
+            this.employeeService = getInstance('EmployeeService');
+
+            if (this.$route.path.indexOf('/edit/') > -1) {
+                this.mode = 'edit';
+            }
+
+            var skillId = this.$route.params.id;
+            if (skillId != 0) {
+                this.skillService.getById(skillId)
+                .then(skill => {
+                    this.skill = skill;
+                    this.skillEmployees = (keywords, page, pageSize) =>
+                        Promise.resolve(paginatedListData(this.skill.Employees));
+                });
+            }
+        },
+        methods: {
+            addEmployee(employee) {
+                this.skill.Employees.push(employee);
+                return {
+                    clearKeywords: true
+                };
+            },
+            discardChanges() {
+                if (this.skill.Id != 0) {
+                    this.$router.push(`/skill/${this.skill.Id}`);
+                }
+                else {
+                    this.$router.push('/skills');
+                }
+            },
+            edit() {
+                this.$router.push(`/skill/edit/${this.skill.Id}`);
+            },
+            removeEmployee(employee) {
+                if (this.mode == 'edit') {
+                    this.skill.Employees = this.skill.Employees.filter(s => s.Id != employee.Id);
+                    this.skillEmployees = (keywords, page, pageSize) =>
+                        Promise.resolve(paginatedListData(this.skill.Employees));
+                }
+                else {
+                    this.$router.push(`/employee/${employee.Id}`);
+                }
+            },
+            remove() {
+                this.skillService.remove(this.skill.Id).then(skill => {
+                    this.$router.push('/skills');
+                });
+            },
+            save() {
+                this.skillService.save(this.skill).then(skill => {
+                    this.$router.push(`/skill/${skill.Id}`);
+                });
+            }
         }
     }
 </script>

@@ -7,7 +7,7 @@
                 </div>
                 <div class="col-xs-6 text-right m-bottom-10">
                     <button
-                        v-on:click="(employee) => $router.push({path: `/employee/0`, query: { mode: 'edit'}})">
+                        v-on:click="() => $router.push('/employee/edit/0')">
                         Create
                     </button>
                 </div>
