@@ -11,7 +11,7 @@ export default class SkillService extends HttpBaseService {
     }
     
     getById(id) {
-        return this.getRequest('api/skill/getById', { id }, {});
+        return this.getRequest('api/skill/getById', { id }, null);
     }
     
     remove(skillId) {

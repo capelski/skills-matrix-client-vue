@@ -1,4 +1,3 @@
-- On new employee creation, don't display the employee name
-- On not found > Not found?
-- Loaders
 - Handle errors through Toastr
+- Loaders
+- Do not allow saving with empty names

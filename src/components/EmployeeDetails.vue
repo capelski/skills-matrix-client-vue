@@ -1,40 +1,46 @@
 <template>
     <div>
-        <div class="page-header">
-            <h2>{{ employee.Name }}</h2>
+        <div v-if="notFound">
+            <h2>The selected skill does not exist</h2>
         </div>
+        
+        <div v-if="notFound == false">
+            <div class="page-header">
+                <h2>{{ employee.Name || 'Employee name' }}</h2>
+            </div>
 
-        <div class="form-group">
-            <label for="Name">Name</label>
-            <input class="form-control" v-model="employee.Name" :disabled="mode == 'read'" />
-        </div>
+            <div class="form-group">
+                <label for="Name">Name</label>
+                <input class="form-control" v-model="employee.Name" :disabled="mode == 'read'" />
+            </div>
 
-        <h3>Skills</h3>
-        <paginated-list
-            :itemsFetcher="employeeSkills"
-            :itemDrawer="ownedSkillDrawer"
-            :itemOnClick="removeSkill">
-        </paginated-list>
+            <h3>Skills</h3>
+            <paginated-list
+                :itemsFetcher="employeeSkills"
+                :itemDrawer="ownedSkillDrawer"
+                :itemOnClick="removeSkill">
+            </paginated-list>
 
-        <paginated-list
-            v-if="mode == 'edit'"
-            :itemsFetcher="skillsFetcher"
-            :itemDrawer="newSkillDrawer"
-            :itemOnClick="addSkill"
-            :hasSearcher="true">
-        </paginated-list>
+            <paginated-list
+                v-if="mode == 'edit'"
+                :itemsFetcher="skillsFetcher"
+                :itemDrawer="newSkillDrawer"
+                :itemOnClick="addSkill"
+                :hasSearcher="true">
+            </paginated-list>
 
-        <!-- Read actions -->
-        <div v-if="mode == 'read'">
-            <button type="button" class="btn btn-primary" v-on:click="edit">Edit</button>
-            <button type="button" class="btn btn-danger" v-on:click="remove">Delete</button>
-        </div>
+            <!-- Read actions -->
+            <div v-if="mode == 'read'">
+                <button type="button" class="btn btn-primary" v-on:click="edit">Edit</button>
+                <button type="button" class="btn btn-danger" v-on:click="remove">Delete</button>
+            </div>
 
-        <!-- Edit actions -->
-        <div v-if="mode == 'edit'">
-            <button type="button" class="btn btn-primary"
-                v-on:click="save">Save</button>
-            <button type="button" class="btn btn-default" v-on:click="discardChanges">Cancel</button>
+            <!-- Edit actions -->
+            <div v-if="mode == 'edit'">
+                <button type="button" class="btn btn-primary"
+                    v-on:click="save">Save</button>
+                <button type="button" class="btn btn-default" v-on:click="discardChanges">Cancel</button>
+            </div>
         </div>
     </div>
 </template>
@@ -61,9 +67,10 @@
         data() {
             return {
                 mode: 'read',
+                notFound: false,
                 employee: {
                     Id: 0,
-                    Name: 'Employee name',
+                    Name: '',
                     Skills: []
                 },
                 employeeSkills: (keywords, page, pageSize) => 
@@ -98,9 +105,14 @@
             if (employeeId != 0) {
                 this.employeeService.getById(employeeId)
                 .then(employee => {
-                    this.employee = employee;
-                    this.employeeSkills = (keywords, page, pageSize) =>
-                        Promise.resolve(paginatedListData(this.employee.Skills));
+                    if (employee) {
+                        this.employee = employee;
+                        this.employeeSkills = (keywords, page, pageSize) =>
+                            Promise.resolve(paginatedListData(this.employee.Skills));
+                    }
+                    else {
+                        this.notFound = true;
+                    }
                 });
             }
         },
