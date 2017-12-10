@@ -133,8 +133,16 @@
                 }
             },
             remove() {
-                this.employeeService.remove(this.employee.Id).then(employee => {
-                    this.$router.push('/employees');
+                Utils.actionModal(
+                    '<div>Are you sure you want to delete ' + this.employee.Name + '?</div>',
+                    'Delete')
+                .then(acceptance => {
+                    if (acceptance) {
+                        this.employeeService.remove(this.employee.Id)
+                        .then(employee => {
+                            this.$router.push('/employees');
+                        });
+                    }
                 });
             },
             save() {

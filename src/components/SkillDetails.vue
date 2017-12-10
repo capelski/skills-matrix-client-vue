@@ -133,8 +133,17 @@
                 }
             },
             remove() {
-                this.skillService.remove(this.skill.Id).then(skill => {
-                    this.$router.push('/skills');
+                Utils.actionModal(
+                    '<div>Are you sure you want to delete ' + this.skill.Name + '?</div>',
+                    'Delete')
+                .then(acceptance => {
+                    console.log(acceptance)
+                    if (acceptance) {
+                        this.skillService.remove(this.skill.Id)
+                        .then(skill => {
+                            this.$router.push('/skills');
+                        });
+                    }
                 });
             },
             save() {

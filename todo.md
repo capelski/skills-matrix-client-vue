@@ -1,3 +1,4 @@
-- Delete popup confirmation 
+- On new employee creation, don't display the employee name
+- On not found > Not found?
 - Loaders
 - Handle errors through Toastr
