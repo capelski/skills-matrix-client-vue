@@ -1,3 +1,3 @@
-- Add/Remove skills icon
 - Delete popup confirmation 
 - Loaders
+- Handle errors through Toastr

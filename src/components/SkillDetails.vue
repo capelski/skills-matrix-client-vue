@@ -12,14 +12,14 @@
         <h3>Employees</h3>
         <paginated-list
             :itemsFetcher="skillEmployees"
-            :itemDrawer="(employee) => employee.Name"
+            :itemDrawer="ownedEmployeeDrawer"
             :itemOnClick="removeEmployee">
         </paginated-list>
 
         <paginated-list
             v-if="mode == 'edit'"
             :itemsFetcher="employeesFetcher"
-            :itemDrawer="(employee) => employee.Name"
+            :itemDrawer="newEmployeeDrawer"
             :itemOnClick="addEmployee"
             :hasSearcher="true">
         </paginated-list>
@@ -76,7 +76,14 @@
                                 Utils.leftOuterJoin(paginatedContent.Items, this.skill.Employees, 'Id');
                             return paginatedContent;
                         }) :
-                        Promise.resolve([])
+                        Promise.resolve([]),
+                ownedEmployeeDrawer: employee => {
+                    if (this.mode == 'read') {
+                        return employee.Name;
+                    }
+                    return `<i class="fa fa-times text-danger"></i> ${employee.Name}`;
+                },
+                newEmployeeDrawer: employee => `<i class="fa fa-plus text-success"></i> ${employee.Name}`
             };
         },
         created() {
