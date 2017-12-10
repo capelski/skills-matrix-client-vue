@@ -157,9 +157,17 @@
                 });
             },
             save() {
-                this.skillService.save(this.skill).then(skill => {
-                    this.$router.push(`/skill/${skill.Id}`);
-                });
+                if (this.skill.Name && this.skill.Name.length > 2) {
+                    this.skillService.save(this.skill).then(skill => {
+                        this.$router.push(`/skill/${skill.Id}`);
+                    });
+                }
+                else {
+                    toastr.error(
+                        'A skill must have a name with at least three characters',
+                        'Invalid name',
+                        {timeOut: 4000});
+                }
             }
         }
     }

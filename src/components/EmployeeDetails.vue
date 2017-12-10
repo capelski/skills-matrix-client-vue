@@ -158,9 +158,17 @@
                 });
             },
             save() {
-                this.employeeService.save(this.employee).then(employee => {
-                    this.$router.push(`/employee/${employee.Id}`);
-                });
+                if (this.employee.Name && this.employee.Name.length > 2) {
+                    this.employeeService.save(this.employee).then(employee => {
+                        this.$router.push(`/employee/${employee.Id}`);
+                    });
+                }
+                else {
+                    toastr.error(
+                        'An employee must have a name with at least three characters',
+                        'Invalid name',
+                        {timeOut: 4000});
+                }
             }
         }
     }
