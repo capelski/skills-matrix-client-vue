@@ -12,7 +12,7 @@ export default class HttpBaseService {
         return fetch(this.apiUrl + url, options)
         .then(response => response.json())
         .catch(error => {
-            // Notify the error through Toastr
+            toastr.error('A network error ocurred', 'Oops!', {timeOut: 4000});
         });
     }
 
@@ -37,7 +37,7 @@ export default class HttpBaseService {
         return fetch(this.apiUrl + url, options)
         .then(response => response.json())
         .catch(error => {
-            // Notify the error through Toastr
+            toastr.error('A network error ocurred', 'Oops!', {timeOut: 4000});
             return defaultValue;
         });
     }
@@ -53,7 +53,7 @@ export default class HttpBaseService {
         return fetch(this.apiUrl + url, options)
         .then(response => response.json())
         .catch(error => {
-            // Notify the error through Toastr
+            toastr.error('A network error ocurred', 'Oops!', {timeOut: 4000});
         });
     }
 };

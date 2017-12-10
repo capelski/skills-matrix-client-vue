@@ -1,3 +1,2 @@
-- Handle errors through Toastr
 - Loaders
 - Do not allow saving with empty names
