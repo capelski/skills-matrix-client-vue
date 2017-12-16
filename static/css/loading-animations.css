@@ -1,0 +1,78 @@
+.loader-wrapper {
+    position: relative;
+}
+
+.loader-wrapper,
+.loaded-content
+{
+    min-height: 100px;
+    background: white;
+}
+
+.loader-wrapper > .loader-animation {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.loader-wrapper > .loaded-content
+{
+    -webkit-animation: fade-in 500ms;
+    animation: fade-in 500ms;
+    -webkit-animation-fill-mode: forwards;
+    animation-fill-mode: forwards;
+}
+
+.loader-wrapper > .loaded-content.loading
+{
+    -webkit-animation: fade-out 500ms;
+    animation: fade-out 500ms;
+    -webkit-animation-fill-mode: forwards;
+    animation-fill-mode: forwards;
+}
+
+@-webkit-keyframes fade-in {
+    0% {
+        visibility: hidden;
+        opacity: 0;
+    }
+    100% {
+        visibility: visible;
+        opacity: 1;
+    }
+}
+
+@-webkit-keyframes fade-out {
+    100% {
+        visibility: hidden;
+        opacity: 0;
+    }
+    0% {
+        visibility: visible;
+        opacity: 1;
+    }
+}
+
+@keyframes fade-in {
+    0% {
+        visibility: hidden;
+        opacity: 0;
+    }
+    100% {
+        visibility: visible;
+        opacity: 1;
+    }
+}
+
+@keyframes fade-out {
+    100% {
+        visibility: hidden;
+        opacity: 0;
+    }
+    0% {
+        visibility: visible;
+        opacity: 1;
+    }
+}

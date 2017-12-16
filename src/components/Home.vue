@@ -57,6 +57,7 @@
 </template>
 
 <script>
+    import Utils from '@/utils';
     import { getInstance } from '@/service-locator';
     import PaginatedList from '@/components/PaginatedList';
 
@@ -67,7 +68,7 @@
         data () {
             return {
                 employeesFetcher: (keywords, page, pageSize) =>
-                    this.employeeService.getMostSkilled()
+                    Utils.stallPromise(this.employeeService.getMostSkilled(), 1000)
                     .then(employees => {
                             return {
                             CurrentPage: 0,
@@ -81,7 +82,7 @@
                         <span class="badge floating">${ employee.Skills.length }</span>`;
                 },
                 skillsFetcher: (keywords, page, pageSize) =>
-                    this.skillService.getRearest()
+                    Utils.stallPromise(this.skillService.getRearest(), 1000)
                     .then(skills => {
                             return {
                             CurrentPage: 0,

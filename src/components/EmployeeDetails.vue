@@ -1,45 +1,55 @@
 <template>
-    <div>
-        <div v-if="notFound">
-            <h2>The selected skill does not exist</h2>
+    <div class="loader-wrapper">
+        <div class="loader-animation">
+            <div class="sk-chasing-dots">
+                <div class="sk-child sk-dot1"></div>
+                <div class="sk-child sk-dot2"></div>
+            </div>
         </div>
-        
-        <div v-if="notFound == false">
-            <div class="page-header">
-                <h2>{{ employee.Name || 'Employee name' }}</h2>
+
+        <div :class="{ 'loaded-content': true, 'loading': loading}">
+            <div v-if="notFound">
+                <h2>The selected skill does not exist</h2>
             </div>
+            
+            <div v-if="notFound == false">
+                <div class="page-header">
+                    <h2>{{ employee.Name || 'Employee name' }}</h2>
+                </div>
 
-            <div class="form-group">
-                <label for="Name">Name</label>
-                <input class="form-control" v-model="employee.Name" :disabled="mode == 'read'" />
-            </div>
+                <div class="form-group">
+                    <label for="Name">Name</label>
+                    <input class="form-control" v-model="employee.Name" :disabled="mode == 'read'" />
+                </div>
 
-            <h3>Skills</h3>
-            <paginated-list
-                :itemsFetcher="employeeSkills"
-                :itemDrawer="ownedSkillDrawer"
-                :itemOnClick="removeSkill">
-            </paginated-list>
+                <h3>Skills</h3>
 
-            <paginated-list
-                v-if="mode == 'edit'"
-                :itemsFetcher="skillsFetcher"
-                :itemDrawer="newSkillDrawer"
-                :itemOnClick="addSkill"
-                :hasSearcher="true">
-            </paginated-list>
+                <paginated-list
+                    v-if="mode == 'edit'"
+                    :itemsFetcher="skillsFetcher"
+                    :itemDrawer="newSkillDrawer"
+                    :itemOnClick="addSkill"
+                    :hasSearcher="true">
+                </paginated-list>
+                
+                <paginated-list
+                    :itemsFetcher="employeeSkills"
+                    :itemDrawer="ownedSkillDrawer"
+                    :itemOnClick="removeSkill">
+                </paginated-list>
 
-            <!-- Read actions -->
-            <div v-if="mode == 'read'">
-                <button type="button" class="btn btn-primary" v-on:click="edit">Edit</button>
-                <button type="button" class="btn btn-danger" v-on:click="remove">Delete</button>
-            </div>
+                <!-- Read actions -->
+                <div v-if="mode == 'read'">
+                    <button type="button" class="btn btn-primary" v-on:click="edit">Edit</button>
+                    <button type="button" class="btn btn-danger" v-on:click="remove">Delete</button>
+                </div>
 
-            <!-- Edit actions -->
-            <div v-if="mode == 'edit'">
-                <button type="button" class="btn btn-primary"
-                    v-on:click="save">Save</button>
-                <button type="button" class="btn btn-default" v-on:click="discardChanges">Cancel</button>
+                <!-- Edit actions -->
+                <div v-if="mode == 'edit'">
+                    <button type="button" class="btn btn-primary"
+                        v-on:click="save">Save</button>
+                    <button type="button" class="btn btn-default" v-on:click="discardChanges">Cancel</button>
+                </div>
             </div>
         </div>
     </div>
@@ -68,6 +78,7 @@
             return {
                 mode: 'read',
                 notFound: false,
+                loading: true,
                 employee: {
                     Id: 0,
                     Name: '',
@@ -77,7 +88,7 @@
                     Promise.resolve(paginatedListData(this.employee.Skills)),
                 skillsFetcher: (keywords, page, pageSize) =>
                     keywords ?
-                        this.skillService.getAll(keywords, page, pageSize)
+                        Utils.stallPromise(this.skillService.getAll(keywords, page, pageSize), 500)
                         .then(paginatedContent => {
                             paginatedContent.Items =
                                 Utils.leftOuterJoin(paginatedContent.Items, this.employee.Skills, 'Id');
@@ -103,7 +114,7 @@
 
             var employeeId = this.$route.params.id;
             if (employeeId != 0) {
-                this.employeeService.getById(employeeId)
+                Utils.stallPromise(this.employeeService.getById(employeeId), 1000)
                 .then(employee => {
                     if (employee) {
                         this.employee = employee;
@@ -113,7 +124,11 @@
                     else {
                         this.notFound = true;
                     }
+                    this.loading = false;
                 });
+            }
+            else {
+                this.loading = false;
             }
         },
         methods: {

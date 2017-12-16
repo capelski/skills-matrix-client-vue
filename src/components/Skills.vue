@@ -34,6 +34,7 @@
 </template>
 
 <script>
+    import Utils from '@/utils';
     import { getInstance } from '@/service-locator';
     import PaginatedList from '@/components/PaginatedList';
 
@@ -44,7 +45,7 @@
         data () {
             return {
                 skillsFetcher: (keywords, page, pageSize) =>
-                    this.skillService.getAll(keywords, page, pageSize)
+                    Utils.stallPromise(this.skillService.getAll(keywords, page, pageSize), 1000)
             };
         },
         created() {
