@@ -9,7 +9,7 @@ export default class HttpBaseService {
             mode: 'cors'
         };
 
-        return fetch(this.apiUrl + url, options)
+        return fetch(this.apiUrl + url + '&$modena=skills-matrix-api-node', options)
         .then(response => response.json())
         .catch(error => {
             toastr.error('A network error ocurred', 'Oops!', {timeOut: 4000});
@@ -22,17 +22,17 @@ export default class HttpBaseService {
             mode: 'cors',
             cache: 'default'
         };
-
-        if (parameters) {
-            url += '?';
-            for (var key in parameters) {
-                var parameter = parameters[key];
-                if (parameter) {
-                    url += (key + '=' + encodeURIComponent(parameter) + '&');
-                }
+        
+        parameters = parameters || {};
+        parameters.$modena = 'skills-matrix-api-node';
+        url += '?';
+        for (var key in parameters) {
+            var parameter = parameters[key];
+            if (parameter) {
+                url += (key + '=' + encodeURIComponent(parameter) + '&');
             }
-            url = url.substring(0, url.length - 1);
         }
+        url = url.substring(0, url.length - 1);
         
         return fetch(this.apiUrl + url, options)
         .then(response => response.json())
@@ -50,7 +50,7 @@ export default class HttpBaseService {
             mode: 'cors'
         };
 
-        return fetch(this.apiUrl + url, options)
+        return fetch(this.apiUrl + url + '?$modena=skills-matrix-api-node', options)
         .then(response => response.json())
         .catch(error => {
             toastr.error('A network error ocurred', 'Oops!', {timeOut: 4000});
